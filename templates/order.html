@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order {{ product }} | Blessy Suppliers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="order-page">
+        <p class="eyebrow">Your selection</p>
+        <h1>{{ product|replace('-', ' ')|title }}</h1>
+        <p>Great choice. Contact Blessy Suppliers to confirm quantity and delivery.</p>
+        <a class="order-button" href="https://wa.me/254759924416">Order on WhatsApp</a>
+        <a class="back-link" href="{{ url_for('home') }}#Products">← Continue shopping</a>
+    </main>
+</body>
+</html>
