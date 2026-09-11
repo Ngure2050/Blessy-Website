@@ -3,16 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order {{ product }} | Blessy Suppliers</title>
+    <title>Place an order | Blessy Suppliers</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <main class="order-page">
-        <p class="eyebrow">Your selection</p>
-        <h1>{{ product|replace('-', ' ')|title }}</h1>
-        <p>Great choice. Contact Blessy Suppliers to confirm quantity and delivery.</p>
-        <a class="order-button" href="https://wa.me/254759924416">Order on WhatsApp</a>
+    <main class="checkout-page">
         <a class="back-link" href="{{ url_for('home') }}#Products">← Continue shopping</a>
+        <section class="checkout-card">
+            <div class="checkout-intro">
+                <p class="eyebrow">Step 1 of 2</p>
+                <h1>Build your meat order</h1>
+                <p>Choose your cut and size. We will confirm availability and delivery with you.</p>
+            </div>
+            {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+            <form class="order-form" action="{{ url_for('order') }}" method="post">
+                <label>Meat selection
+                    <select name="product" required>
+                        <option value="">Choose meat</option>
+                        {% for product, price in products.items() %}
+                        <option value="{{ product }}" {% if selected_product == product %}selected{% endif %}>{{ product }} — Ksh {{ '{:,}'.format(price) }}/kg</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>Meat size
+                    <select name="portion" required>
+                        <option value="">Choose size</option>
+                        {% for value, label in portions.items() %}
+                        <option value="{{ value }}" {% if form.get('portion') == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>Number of packs
+                    <input name="quantity" type="number" min="1" max="100" value="{{ form.get('quantity', 1) }}" required>
+                </label>
+                <label>Your name
+                    <input name="customer_name" type="text" autocomplete="name" value="{{ form.get('customer_name', '') }}" required>
+                </label>
+                <label>Phone number
+                    <input name="phone" type="tel" autocomplete="tel" placeholder="07XXXXXXXX" value="{{ form.get('phone', '') }}" required>
+                </label>
+                <label class="full-width">Delivery location
+                    <input name="location" type="text" autocomplete="street-address" placeholder="Estate, street, or landmark" value="{{ form.get('location', '') }}" required>
+                </label>
+                <button class="order-button full-width" type="submit">Review and confirm order →</button>
+            </form>
+        </section>
     </main>
 </body>
 </html>

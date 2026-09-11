@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order confirmed | Blessy Suppliers</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="checkout-page"><section class="checkout-card confirmation-card">
+        <p class="eyebrow">Order received</p>
+        <h1>Thanks, {{ order.customer_name }}.</h1>
+        <p>Your order <strong>#{{ order.id }}</strong> is stored and ready for confirmation.</p>
+        <dl class="order-summary">
+            <div><dt>Meat</dt><dd>{{ order.product }}</dd></div>
+            <div><dt>Size</dt><dd>{{ order.quantity }} × {{ order.portion_label }}</dd></div>
+            <div><dt>Delivery</dt><dd>{{ order.location }}</dd></div>
+            <div><dt>Total</dt><dd>Ksh {{ '{:,}'.format(order.total_price) }}</dd></div>
+        </dl>
+        <a class="order-button" href="{{ whatsapp_url }}" target="_blank" rel="noopener">Send order to WhatsApp</a>
+        <a class="back-link" href="{{ url_for('home') }}#Products">← Back to products</a>
+    </section></main>
+</body>
+</html>

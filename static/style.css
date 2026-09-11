@@ -309,7 +309,29 @@ header button {
     .price { color: #a41111; font-size: 1.08rem; font-weight: 800; }
     .price small { color: #777780; font-size: 0.72rem; font-weight: 600; }
     .card-footer a { background: #a41111; border-radius: 5px; color: white; font-size: 0.78rem; font-weight: 700; padding: 9px 13px; text-decoration: none; }
-    .card-footer a:hover { color: white; background: #7e0c0c; }
+.card-footer a:hover { color: white; background: #7e0c0c; }
+
+/* Checkout and admin */
+.checkout-page, .admin-page { max-width: 1040px; margin: 70px auto; padding: 0 24px; }
+.checkout-card { max-width: 760px; margin: 24px auto 0; padding: 38px; border: 1px solid #e9e9ec; border-radius: 16px; box-shadow: 0 12px 35px rgba(17, 17, 29, 0.08); }
+.checkout-intro h1, .confirmation-card h1, .admin-page h1 { color: #11111d; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; margin: 8px 0 14px; }
+.checkout-intro > p:last-child, .confirmation-card > p { color: #6b6b74; line-height: 1.6; }
+.order-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.order-form label { color: #252532; display: grid; font-size: 0.85rem; font-weight: 700; gap: 8px; }
+.order-form input, .order-form select { background: #fff; border: 1px solid #d9d9df; border-radius: 6px; color: #11111d; font: inherit; font-weight: 400; padding: 12px; width: 100%; }
+.order-form input:focus, .order-form select:focus { border-color: #a41111; outline: 2px solid rgba(164, 17, 17, 0.15); }
+.full-width { grid-column: 1 / -1; }
+.order-button { border: 0; cursor: pointer; font: inherit; font-weight: 700; text-align: center; text-decoration: none; }
+.form-error { background: #fff1f1; border-left: 4px solid #a41111; color: #791010; margin-top: 20px; padding: 12px; }
+.confirmation-card { text-align: center; }
+.order-summary { border-top: 1px solid #e9e9ec; margin: 28px 0; text-align: left; }
+.order-summary div { border-bottom: 1px solid #e9e9ec; display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; }
+.order-summary dt { color: #6b6b74; }.order-summary dd { color: #11111d; font-weight: 700; margin: 0; text-align: right; }
+.confirmation-card .back-link { display: block; margin: 20px 0 0; }
+.admin-count { color: #6b6b74; margin: 12px 0 24px; }.orders-table-wrap { border: 1px solid #e9e9ec; border-radius: 12px; overflow-x: auto; }
+.orders-table-wrap table { border-collapse: collapse; min-width: 760px; width: 100%; }.orders-table-wrap th, .orders-table-wrap td { border-bottom: 1px solid #e9e9ec; padding: 15px; text-align: left; vertical-align: top; }.orders-table-wrap th { background: #11111d; color: #fff; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; }.orders-table-wrap td { color: #353540; font-size: 0.9rem; }.orders-table-wrap small { color: #6b6b74; }
+
+@media (max-width: 600px) { .checkout-page, .admin-page { margin: 40px auto; padding: 0 16px; }.checkout-card { padding: 26px 20px; }.order-form { grid-template-columns: 1fr; }.full-width { grid-column: auto; } }
 
 /* Why choose us */
    .Why-choose-us {

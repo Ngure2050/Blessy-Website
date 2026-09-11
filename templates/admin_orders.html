@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders dashboard | Blessy Suppliers</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="admin-page">
+        <p class="eyebrow">Blessy Suppliers</p><h1>Orders dashboard</h1>
+        <p class="admin-count">{{ orders|length }} order{{ '' if orders|length == 1 else 's' }} received</p>
+        <div class="orders-table-wrap"><table>
+            <thead><tr><th>ID</th><th>Customer</th><th>Order</th><th>Delivery</th><th>Total</th><th>Received</th></tr></thead>
+            <tbody>{% for order in orders %}
+                <tr><td>#{{ order.id }}</td><td>{{ order.customer_name }}<br><small>{{ order.phone }}</small></td><td>{{ order.quantity }} × {{ order.portion_label }} {{ order.product }}</td><td>{{ order.location }}</td><td>Ksh {{ '{:,}'.format(order.total_price) }}</td><td>{{ order.created_at }}</td></tr>
+            {% else %}<tr><td colspan="6">No orders yet.</td></tr>{% endfor %}</tbody>
+        </table></div>
+    </main>
+</body>
+</html>
