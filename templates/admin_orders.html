@@ -11,7 +11,7 @@
         <div class="orders-table-wrap"><table>
             <thead><tr><th>ID</th><th>Customer</th><th>Order</th><th>Delivery</th><th>Total</th><th>Received</th></tr></thead>
             <tbody>{% for order in orders %}
-                <tr><td>#{{ order.id }}</td><td>{{ order.customer_name }}<br><small>{{ order.phone }}</small></td><td>{{ order.quantity }} × {{ order.portion_label }} {{ order.product }}</td><td>{{ order.location }}</td><td>Ksh {{ '{:,}'.format(order.total_price) }}</td><td>{{ order.created_at }}</td></tr>
+                <tr><td>#{{ order.id }}</td><td>{{ order.customer_name }}<br><small>{{ order.email }}<br>{{ order.phone }}</small></td><td>{{ order.quantity }} × {{ order.portion_label }} {{ order.product }}</td><td>{{ order.location }}</td><td>Ksh {{ '{:,}'.format(order.total_price) }}</td><td>{{ order.created_at }}</td></tr>
             {% else %}<tr><td colspan="6">No orders yet.</td></tr>{% endfor %}</tbody>
         </table></div>
     </main>

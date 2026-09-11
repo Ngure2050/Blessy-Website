@@ -33,12 +33,15 @@ def initialize_database():
         connection.execute("""
             CREATE TABLE IF NOT EXISTS orders (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                customer_name TEXT NOT NULL, phone TEXT NOT NULL, location TEXT NOT NULL,
+                customer_name TEXT NOT NULL, email TEXT NOT NULL DEFAULT '', phone TEXT NOT NULL, location TEXT NOT NULL,
                 product TEXT NOT NULL, portion_kg REAL NOT NULL, portion_label TEXT NOT NULL,
                 quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, total_price INTEGER NOT NULL,
                 status TEXT NOT NULL DEFAULT 'New', created_at TEXT NOT NULL
             )
         """)
+        columns = {column[1] for column in connection.execute("PRAGMA table_info(orders)")}
+        if "email" not in columns:
+            connection.execute("ALTER TABLE orders ADD COLUMN email TEXT NOT NULL DEFAULT ''")
 
 
 initialize_database()
@@ -78,8 +81,8 @@ def order():
 
     form = request.form
     product, portion_value = form.get("product", ""), form.get("portion", "")
-    customer_name, phone, location = (form.get("customer_name", "").strip(),
-                                      form.get("phone", "").strip(), form.get("location", "").strip())
+    customer_name, email, phone, location = (form.get("customer_name", "").strip(), form.get("email", "").strip(),
+                                             form.get("phone", "").strip(), form.get("location", "").strip())
     try:
         quantity = int(form.get("quantity", "0"))
     except ValueError:
@@ -90,8 +93,8 @@ def order():
         error = "Choose a product from the list."
     elif portion_value not in PORTIONS:
         error = "Choose a meat size."
-    elif not customer_name or not phone or not location:
-        error = "Please enter your name, phone number, and delivery location."
+    elif not customer_name or not email or not phone or not location:
+        error = "Please enter your name, email, phone number, and delivery location."
     elif quantity < 1 or quantity > 100:
         error = "Quantity must be between 1 and 100."
     if error:
@@ -103,10 +106,10 @@ def order():
     created_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     with get_database() as connection:
         cursor = connection.execute("""
-            INSERT INTO orders (customer_name, phone, location, product, portion_kg, portion_label,
+            INSERT INTO orders (customer_name, email, phone, location, product, portion_kg, portion_label,
                                 quantity, unit_price, total_price, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (customer_name, phone, location, product, portion_kg, PORTIONS[portion_value],
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (customer_name, email, phone, location, product, portion_kg, PORTIONS[portion_value],
               quantity, unit_price, total_price, created_at))
         order_id = cursor.lastrowid
     return redirect(url_for("order_confirmation", order_id=order_id))
@@ -120,6 +123,7 @@ def order_confirmation(order_id):
         abort(404)
     message = (f"New Blessy order #{saved_order['id']}%0A"
                f"Customer: {saved_order['customer_name']}%0A"
+               f"Email: {saved_order['email']}%0A"
                f"Phone: {saved_order['phone']}%0A"
                f"Delivery: {saved_order['location']}%0A"
                f"Order: {saved_order['quantity']} × {saved_order['portion_label']} {saved_order['product']}%0A"

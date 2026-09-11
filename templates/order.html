@@ -7,21 +7,26 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <main class="checkout-page">
-        <a class="back-link" href="{{ url_for('home') }}#Products">← Continue shopping</a>
-        <section class="checkout-card">
-            <div class="checkout-intro">
-                <p class="eyebrow">Step 1 of 2</p>
-                <h1>Build your meat order</h1>
-                <p>Choose your cut and size. We will confirm availability and delivery with you.</p>
+    <main class="checkout-shell">
+        <section class="ticket-checkout">
+            <header class="checkout-header">
+                <p>Blessy Suppliers · Fresh to your door</p>
+                <h1>WHAT'S FOR DINNER?</h1>
+                <a class="checkout-close" href="{{ url_for('home') }}#Products" aria-label="Close checkout">×</a>
+            </header>
+            <div class="order-steps" aria-label="Order progress">
+                <div class="step active"><span>1</span><strong>Select meat</strong></div>
+                <div class="step active"><span>2</span><strong>Your details</strong></div>
+                <div class="step"><span>3</span><strong>Review & confirm</strong></div>
             </div>
-            {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
-            <form class="order-form" action="{{ url_for('order') }}" method="post">
+            <div class="checkout-form-area">
+                {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+                <form class="order-form ticket-form" action="{{ url_for('order') }}" method="post">
                 <label>Meat selection
                     <select name="product" required>
                         <option value="">Choose meat</option>
                         {% for product, price in products.items() %}
-                        <option value="{{ product }}" {% if selected_product == product %}selected{% endif %}>{{ product }} — Ksh {{ '{:,}'.format(price) }}/kg</option>
+                        <option value="{{ product }}" data-price="{{ price }}" {% if selected_product == product %}selected{% endif %}>{{ product }} — Ksh {{ '{:,}'.format(price) }}/kg</option>
                         {% endfor %}
                     </select>
                 </label>
@@ -33,11 +38,14 @@
                         {% endfor %}
                     </select>
                 </label>
-                <label>Number of packs
+                <label class="full-width">Number of packs
                     <input name="quantity" type="number" min="1" max="100" value="{{ form.get('quantity', 1) }}" required>
                 </label>
-                <label>Your name
+                <label class="full-width">Full name
                     <input name="customer_name" type="text" autocomplete="name" value="{{ form.get('customer_name', '') }}" required>
+                </label>
+                <label>Email address
+                    <input name="email" type="email" autocomplete="email" placeholder="you@example.com" value="{{ form.get('email', '') }}" required>
                 </label>
                 <label>Phone number
                     <input name="phone" type="tel" autocomplete="tel" placeholder="07XXXXXXXX" value="{{ form.get('phone', '') }}" required>
@@ -45,9 +53,27 @@
                 <label class="full-width">Delivery location
                     <input name="location" type="text" autocomplete="street-address" placeholder="Estate, street, or landmark" value="{{ form.get('location', '') }}" required>
                 </label>
-                <button class="order-button full-width" type="submit">Review and confirm order →</button>
-            </form>
+                <div class="ticket-footer full-width">
+                    <div><small>Your order total</small><strong id="order-total">Ksh —</strong></div>
+                    <button class="order-button" type="submit">REVIEW & CONFIRM <span>→</span></button>
+                </div>
+                </form>
+            </div>
         </section>
     </main>
+    <script>
+        const product = document.querySelector('[name="product"]');
+        const portion = document.querySelector('[name="portion"]');
+        const quantity = document.querySelector('[name="quantity"]');
+        const total = document.querySelector('#order-total');
+        function updateTotal() {
+            const price = Number(product.selectedOptions[0]?.dataset.price || 0);
+            const size = Number(portion.value || 0);
+            const packs = Number(quantity.value || 0);
+            total.textContent = price && size && packs ? `Ksh ${(price * size * packs).toLocaleString()}` : 'Ksh —';
+        }
+        [product, portion, quantity].forEach(field => field.addEventListener('input', updateTotal));
+        updateTotal();
+    </script>
 </body>
 </html>
