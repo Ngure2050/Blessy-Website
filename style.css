@@ -4,7 +4,9 @@
     box-sizing: border-box;
     font-family: 'Poppins',Georgia, sans-serif;
 }
-
+.html{
+    scroll-behavior: smooth;
+}
 
 
 body{
@@ -93,11 +95,13 @@ header button {
     z-index: 1;
     background: linear-gradient
     (to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    padding:0 42px;
 }
 
 .hero-left h1 {
     font-size: 3rem;
     margin-bottom: 20px;
+    
 }
 .hero-left p {
     font-size: 1.2rem;
@@ -181,80 +185,118 @@ header button {
     }
 
     .products {
-      display: flex;
-      flex-direction: column;
-      margin-top: 50px;
-    
+      max-width: 1180px;
+      margin: 90px auto;
+      padding: 0 42px;
+      background-color:#B42BGA;
     }
-    .product-h2{
-        Font-size: 1.5rem;
-        margin-bottom: 10px;
-        Padding: 10px 10px;
-        align-self: flex-start;
+
+    .products-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 30px;
+        margin-bottom: 32px;
     }
+
+
+    .products-heading h2 {
+        color: #222334;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+
+    .products-heading > div > p:last-child {
+        color: #6b6b74;
+        max-width: 45ch;
+        line-height: 1.55;
+    }
+
+    .view-menu span { color: #a41111; font-size: 1.2rem; margin-left: 6px; }
+
     .product-grid{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        padding: 10px 20px;
-        gap: 5px;
-        border-radius: 4px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
     }
   
     .product-card {
         display : flex;
         flex-direction: column;
-    
         color: #11111d;
-        padding: 10px;
-        border-radius: 8px;
-        text-align: left;
+        background:#white;
 
-
-        padding: 8px;
-        border-radius: 10px;
-         min-width: 20px;
-
-          min-height: 260px;
+        border: 1px solid #e9e9ec;
+        border-radius: 14px;
+        overflow: hidden;
+        min-height: 350px;
+        box-shadow: 0 9px 26px rgba(17, 17, 29, 0.06);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
+
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(17, 17, 29, 0.12); }
 
     
     @media (max-width: 900px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
     }
     }
 
     @media (max-width: 600px) {
     .product-grid {
         grid-template-columns: 1fr;
-        padding: 20px;
+    }
+    .products { padding: 0 20px; margin: 60px auto; }
+    .products-heading { align-items: flex-start; flex-direction: column; gap: 18px; }
+    .view-menu { padding-bottom: 4px;
     }
   }
 
     .product-card img {
         width: 100%;
-        height: 60%;
+        height: 230px;
         object-fit: cover;
         background-color: transparent;
         border-radius: 8px;
-        margin-right: 10px;
-        overflow :hidden;
+        transition: transform 0.3s ease;
     }
 
     .product-card img:hover {
         transform: scale(1.05);
-        transition: transform 0.3s ease;
     }
     .product-info {
-        margin-top: 30px;
-        gap: 5px;
-
-
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 18px;
     }
     .product-info h3 {
         font-size: 1.25rem;
         margin-bottom: 5px;
     }
+
+    .product-info > p {
+        color: #6b6b74;
+        font-size: 0.68rem;
+        line-height: 1.5;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 18px;
+    }
+
+    .price { color: #a41111; font-size: 1.08rem; font-weight: 800; }
+    .price small { color: #777780; font-size: 0.72rem; font-weight: 600; }
+    .card-footer a { background: #a41111; border-radius: 5px; color: white; font-size: 0.78rem; font-weight: 700; padding: 9px 13px; text-decoration: none; }
+    .card-footer a:hover { color: white; background: #7e0c0c; }
 
 /* Why choose us */
    .Why-choose-us {
