@@ -17,7 +17,7 @@
             <div><dt>Delivery</dt><dd>{{ order.location }}</dd></div>
             <div><dt>Total</dt><dd>Ksh {{ '{:,}'.format(order.total_price) }}</dd></div>
         </dl>
-        <a class="order-button" href="{{ whatsapp_url }}" target="_blank" rel="noopener">Send order to WhatsApp</a>
+        <a class="order-button" href="{{ whatsapp_url }}" target="_blank" rel="noopener">Order On WhatsApp</a>
         <a class="back-link" href="{{ url_for('home') }}#Products">← Back to products</a>
     </section></main>
 </body>
